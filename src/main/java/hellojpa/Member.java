@@ -9,6 +9,7 @@ public class Member {
     @Id
     private Long id;
 
+
     @Column(name="name", insertable = true, updatable = false) // insert에는 반영되지만 update시에는 반영 안되도록 설정
     private String username;
 
