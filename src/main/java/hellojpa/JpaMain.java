@@ -43,7 +43,10 @@ public class JpaMain {
             em.persist(member2);
 
             // 준영속 => 회원 엔티티를 영속성 컨텍스트에서 분리
-            //em.detach(member);
+            // em.detach(member); // 특정 엔티티만 준영속 상태로 전환
+            // em.clear(); // 영속성 컨텍스트를 완전히 초기화
+            // em.close(); // 영속성 컨텍스트를 종료
+
 
             // 객체를 삭제 DB에 imsert query를 보낸다.
             //em.remove(member);
