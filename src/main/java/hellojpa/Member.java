@@ -2,13 +2,18 @@ package hellojpa;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+// @Table(name="MER") => 매핑시 테이블 명 지정
 public class Member {
 
     @Id
     private Long id;
     private String name;
+
+    public Member() {
+    }
 
     public Member(long l, String a) {
     }
