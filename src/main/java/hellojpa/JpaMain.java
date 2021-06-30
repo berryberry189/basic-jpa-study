@@ -20,11 +20,10 @@ public class JpaMain {
         try{
 
             Member member = new Member();
-            member.setId(1L);
             member.setUsername("A");
             member.setRoleType(RoleType.USER);
 
-            em.persist(member);
+            em.persist(member); // 이 시점에 db에 insert 한 이후에야 id를 알 수있다(@GeneratedValue auto_increment 의 경우만 다른 옵션은 commit 후에 insert)
 
             tx.commit();
         } catch (Exception e){

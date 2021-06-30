@@ -4,9 +4,15 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+// @SequenceGenerator(name="member_seq_generator", sequenceName = "member_seq", initialValue = 1, allocationSize = 1) 1부터 시작 1씩 늘어남
+// @TableGenerator(name = "MEMBER_SEQ_GENERATOR", table = "MY_SEQUENCES", pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
 
+    // ** 권장 식별자 전략 : Long형 + 대체키(시퀀스 등) + 키 생성전략(auto increment, sequence object 등) **
     @Id
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
+    // @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR") // MY_SEQUENCES라는 시퀀스 테이블이 생성됨(운영에서 사용하는것은 비추)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
