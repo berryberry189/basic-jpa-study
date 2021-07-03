@@ -15,7 +15,7 @@ public class Member {
 
     @ManyToOne // 멤버가 N 팀이 1
     @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    private Team team; // 연관관계 주인 **!!!외래키가 있는 곳이 주인!!!
 
     public Long getId() {
         return id;
@@ -37,7 +37,8 @@ public class Member {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void changeTeam(Team team) {
         this.team = team;
+        team.getMembers().add(this);
     }
 }

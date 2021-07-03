@@ -1,9 +1,7 @@
 package hellojpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,13 +25,29 @@ public class JpaMain {
             Member member = new Member();
             member.setName("member1");
             // member.setTeamId(team.getId());
-            member.setTeam(team); // 단방향 연관관계 설정, 참조 저장
+            member.changeTeam(team); // 단방향 연관관계 설정, 참조 저장
             em.persist(member);
+
+            // team.addMember(member); 연관관계 편의메소드는 둘 중 하나만
+
+            em.flush();
+            em.clear();
 
             // 조회
             Member findMember = em.find(Member.class, member.getId());
-//참조를     // 참조를 사용해서 연관관계 조회
-            Team findTeam = findMember.getTeam();
+
+            /**
+            List<Member> members = findMember.getTeam().getMembers();
+            for(Member m : members){
+                System.out.println("m = " + m.getName());
+            }
+             */
+
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
+            for(Member m : members){
+                System.out.println("m = " + m.getName());
+            }
 
             tx.commit();
         } catch (Exception e){

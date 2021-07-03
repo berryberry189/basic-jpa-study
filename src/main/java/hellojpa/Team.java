@@ -3,6 +3,9 @@ package hellojpa;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -10,6 +13,15 @@ public class Team {
     @Id @GeneratedValue
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "team") // 가짜 매핑( 주인의 반대편, 읽기만 )
+    private List<Member> members = new ArrayList<Member>();
+
+    public void addMember(Member member){
+        member.changeTeam(this);
+        members.add(member);
+    }
+
 
     public Long getId() {
         return id;
@@ -25,6 +37,14 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 }
 
