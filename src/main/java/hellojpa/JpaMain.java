@@ -18,12 +18,22 @@ public class JpaMain {
         tx.begin();
 
         try{
+            // 팀 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
+            // 회원 저장
             Member member = new Member();
-            member.setUsername("A");
-            member.setRoleType(RoleType.USER);
+            member.setName("member1");
+            // member.setTeamId(team.getId());
+            member.setTeam(team); // 단방향 연관관계 설정, 참조 저장
+            em.persist(member);
 
-            em.persist(member); // 이 시점에 db에 insert 한 이후에야 id를 알 수있다(@GeneratedValue auto_increment 의 경우만 다른 옵션은 commit 후에 insert)
+            // 조회
+            Member findMember = em.find(Member.class, member.getId());
+//참조를     // 참조를 사용해서 연관관계 조회
+            Team findTeam = findMember.getTeam();
 
             tx.commit();
         } catch (Exception e){
