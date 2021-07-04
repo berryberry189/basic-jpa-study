@@ -30,7 +30,12 @@
   - 3. 변경된 엔티티가 있는 경우에는 쓰기지연 저장소에 저장한다
   - 4. 쓰기지연 저장소의 sql을 DB로 보낸다.
 - **지연로딩, 즉시로딩**
-  - 
+  - Member 엔티티와 Team 엔티티가 연관관계에 있을 때 Member를 조회하는 경우,
+  - FetchType.EAGER 즉시로딩은 한방쿼리로 member와 team을 조인해서 조회한다
+  - FetchType.LAZY 지연로딩은 Member만 조회하며 member.getTeam().getName()과 같이 Team 엔티티에 있는 무엇인가를 실제로 사용할 때 초기화가 실행되며, Team을 프록시 객체로 가져온다 (조회한다)
+  - @ManyToOne, @OneToOne은 기본이 즉시로딩
+  - @ManyToMany, @OneToMany는 기본이 지연로딩
+  - **가급적 지연로딩만 사용하는 것이 좋다**
 
 ### 엔티티의 생명주기
 - 비영속 (new, transient) :  영속성 컨텍스트와 관계가 없는 상태
