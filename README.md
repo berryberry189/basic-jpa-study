@@ -68,6 +68,9 @@
 - 처음 사용할때 한번만 초기화 한다
 - 프록시 객체가 실제 객체로 바뀌는 것이 아니며, 실제 객체에 접근할 수 있게 되는 것이다.
 - 프록시 객체는 원본 객체를 상속 받는다
-    - 타입 체크 ⇒ == (X) , instanceof ( O)
+    - 타입 체크 ⇒ == (X) , **instanceof (O)**
 - 영속성 컨텍스트에 찾는 엔티티가 이미 있으면, em.getReference();를 호출해도 실제 엔티티를 반환한다
 - ⭐ 영속성 컨텍스트의 도움을 받을 수 없는 **준영속 상태일때, 프록시를 초기화 하면 문제가 발생한다**
+- 프록시 초기화 여부 확인 : emf.getPersistenceUnitUtil().isLoaded(referenceMember);
+- 프록시 클래스 확인 : entity.getClass().getName();
+- 프록시 강제 초기화 : org.hibernate.Hibernate.initialize(entity);  -> JPA 표준은 강제 초기화 없음
