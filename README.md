@@ -74,3 +74,32 @@
 - 프록시 초기화 여부 확인 : emf.getPersistenceUnitUtil().isLoaded(referenceMember);
 - 프록시 클래스 확인 : entity.getClass().getName();
 - 프록시 강제 초기화 : org.hibernate.Hibernate.initialize(entity);  -> JPA 표준은 강제 초기화 없음
+
+
+## CASCADE 영속성 전이
+
+- 특정 엔티티를 영속상태로 만들때, 특정 엔티티도 함께 영속 상태로 만들고 싶은 경우
+- 라이프 사이클이 동일할 때 / 단일 엔티티에 종속적일 때 사용
+
+```java
+@OneToMany(mappedBy="parent", **cascade=CascadeType.ALL**)
+```
+
+- 영속성 전이는 연관관계를 매핑하는 것과 아무 관련이 없다.
+- CASCADE의 종류 ( ALL: 모두 적용, PERSIST: 영속, REMOVE: 삭제 )
+
+## 고아 객체
+
+- **orphanRemoval = true ( or false )**
+- 고아 객체 제거: 부모 엔티티와 연관관계가 끊어진 자식 엔티티
+를 자동으로 삭제
+- 참조할 곳이 하나일 때 사용해야함
+- 특정 엔티티가 개인 소유할 때 사용
+- @OneToOne, @OneToMany만 가능
+- 부모 객체를 제거하면 자식은 고아가 됨 → 고아 객체 기능을 활성화 하면, 부모를 제거할 때 자식도 함께 제거됨 ( like : CascadeType.REMOVE )
+
+## 영속성 전이 + 고아 객체 , 생명주의
+
+- **CascadeType.ALL  +  orphanRemoval = true**
+- 부모 엔티티를 통해 자식의 생명주기를 관리할 수 있다.
+- DDD의 Aggregate Root개념을 구현할 때 유용
